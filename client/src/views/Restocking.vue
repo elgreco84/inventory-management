@@ -190,14 +190,14 @@ export default {
 <style scoped>
 .budget-slider {
   width: 100%;
-  accent-color: #2563eb;
+  accent-color: var(--primary);
 }
 
 .place-order {
-  background: #2563eb;
-  color: white;
+  background: var(--primary);
+  color: var(--primary-foreground);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius);
   padding: 0.5rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 600;
@@ -205,20 +205,20 @@ export default {
 }
 
 .place-order:hover:not(:disabled) {
-  background: #1d4ed8;
+  background: var(--primary);
 }
 
 .place-order:disabled {
-  background: #cbd5e1;
+  background: var(--input);
   cursor: not-allowed;
 }
 
 .confirmation {
-  background: #d1fae5;
-  border: 1px solid #a7f3d0;
-  color: #065f46;
+  background: var(--success-soft);
+  border: 1px solid var(--success-soft);
+  color: var(--success);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius);
   margin-bottom: 1.25rem;
   font-size: 0.938rem;
 }

@@ -156,7 +156,7 @@ const close = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -165,9 +165,9 @@ const close = () => {
 }
 
 .modal-container {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  background: var(--background);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
@@ -181,32 +181,31 @@ const close = () => {
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border);
 }
 
 .modal-title {
   font-size: 1.25rem;
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--foreground);
 }
 
 .close-button {
   background: none;
   border: none;
-  color: #64748b;
+  color: var(--muted-foreground);
   cursor: pointer;
   padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: var(--radius);
   transition: all 0.15s ease;
 }
 
 .close-button:hover {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--muted);
+  color: var(--foreground);
 }
 
 .modal-body {
@@ -221,27 +220,25 @@ const close = () => {
 
 .summary-card {
   padding: 1.5rem;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   text-align: center;
 }
 
 .summary-card.total {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: white;
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .summary-label {
   font-size: 0.875rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   opacity: 0.9;
   margin-bottom: 0.5rem;
 }
 
 .summary-value {
   font-size: 2.25rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .cost-breakdown {
@@ -252,28 +249,9 @@ const close = () => {
 
 .cost-item {
   padding: 1.25rem;
-  border-radius: 10px;
-  border: 2px solid;
-}
-
-.cost-item.procurement {
-  border-color: #93c5fd;
-  background: #eff6ff;
-}
-
-.cost-item.operational {
-  border-color: #c4b5fd;
-  background: #f5f3ff;
-}
-
-.cost-item.labor {
-  border-color: #86efac;
-  background: #f0fdf4;
-}
-
-.cost-item.overhead {
-  border-color: #fcd34d;
-  background: #fffbeb;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--muted);
 }
 
 .cost-header {
@@ -286,7 +264,7 @@ const close = () => {
 .cost-icon {
   width: 48px;
   height: 48px;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -294,23 +272,23 @@ const close = () => {
 }
 
 .cost-item.procurement .cost-icon {
-  background: #3b82f6;
-  color: white;
+  background: var(--chart-1);
+  color: var(--primary-foreground);
 }
 
 .cost-item.operational .cost-icon {
-  background: #8b5cf6;
-  color: white;
+  background: var(--chart-2);
+  color: var(--primary-foreground);
 }
 
 .cost-item.labor .cost-icon {
-  background: #10b981;
-  color: white;
+  background: var(--chart-3);
+  color: var(--primary-foreground);
 }
 
 .cost-item.overhead .cost-icon {
-  background: #f59e0b;
-  color: white;
+  background: var(--chart-4);
+  color: var(--foreground);
 }
 
 .cost-info {
@@ -319,46 +297,46 @@ const close = () => {
 
 .cost-name {
   font-weight: 600;
-  color: #0f172a;
+  color: var(--foreground);
   font-size: 1rem;
   margin-bottom: 0.25rem;
 }
 
 .cost-amount {
   font-size: 1.5rem;
-  font-weight: 700;
-  color: #0f172a;
+  font-weight: 600;
+  color: var(--foreground);
 }
 
 .cost-percentage {
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--muted-foreground);
   font-weight: 500;
 }
 
 .modal-footer {
   padding: 1.5rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--border);
   display: flex;
   justify-content: flex-end;
 }
 
 .btn-secondary {
   padding: 0.625rem 1.25rem;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   font-weight: 500;
   font-size: 0.875rem;
-  color: #334155;
+  color: var(--foreground);
   cursor: pointer;
   transition: all 0.15s ease;
   font-family: inherit;
 }
 
 .btn-secondary:hover {
-  background: #e2e8f0;
-  border-color: #cbd5e1;
+  background: var(--border);
+  border-color: var(--input);
 }
 
 /* Modal transition animations */

@@ -1,45 +1,82 @@
 <template>
-  <div class="app">
-    <header class="top-nav">
-      <div class="nav-container">
-        <div class="logo">
-          <h1>{{ t('nav.companyName') }}</h1>
-          <span class="subtitle">{{ t('nav.subtitle') }}</span>
+  <div class="app" :class="{ collapsed }">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">CC</div>
+        <div class="brand-text">
+          <div class="brand-name">{{ t('nav.companyName') }}</div>
+          <div class="brand-sub">{{ t('nav.subtitle') }}</div>
         </div>
-        <nav class="nav-tabs">
-          <router-link to="/" :class="{ active: $route.path === '/' }">
-            {{ t('nav.overview') }}
+      </div>
+      <nav class="nav" :aria-label="t('nav.mainNav')">
+        <div class="nav-group">
+          <div class="nav-group-label">{{ t('nav.groupOverview') }}</div>
+          <router-link to="/" class="nav-link" :title="collapsed ? t('nav.overview') : null" :aria-label="t('nav.overview')">
+            <svg class="nav-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+            <span class="nav-label">{{ t('nav.overview') }}</span>
           </router-link>
-          <router-link to="/inventory" :class="{ active: $route.path === '/inventory' }">
-            {{ t('nav.inventory') }}
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">{{ t('nav.groupOperations') }}</div>
+          <router-link to="/inventory" class="nav-link" :title="collapsed ? t('nav.inventory') : null" :aria-label="t('nav.inventory')">
+            <svg class="nav-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
+            <span class="nav-label">{{ t('nav.inventory') }}</span>
           </router-link>
-          <router-link to="/orders" :class="{ active: $route.path === '/orders' }">
-            {{ t('nav.orders') }}
+          <router-link to="/orders" class="nav-link" :title="collapsed ? t('nav.orders') : null" :aria-label="t('nav.orders')">
+            <svg class="nav-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            <span class="nav-label">{{ t('nav.orders') }}</span>
           </router-link>
-          <router-link to="/spending" :class="{ active: $route.path === '/spending' }">
-            {{ t('nav.finance') }}
+          <router-link to="/restocking" class="nav-link" :title="collapsed ? t('nav.restocking') : null" :aria-label="t('nav.restocking')">
+            <svg class="nav-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 11-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+            <span class="nav-label">{{ t('nav.restocking') }}</span>
           </router-link>
-          <router-link to="/demand" :class="{ active: $route.path === '/demand' }">
-            {{ t('nav.demandForecast') }}
+          <router-link to="/demand" class="nav-link" :title="collapsed ? t('nav.demandForecast') : null" :aria-label="t('nav.demandForecast')">
+            <svg class="nav-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+            <span class="nav-label">{{ t('nav.demandForecast') }}</span>
           </router-link>
-          <router-link to="/restocking" :class="{ active: $route.path === '/restocking' }">
-            {{ t('nav.restocking') }}
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">{{ t('nav.groupFinance') }}</div>
+          <router-link to="/spending" class="nav-link" :title="collapsed ? t('nav.finance') : null" :aria-label="t('nav.finance')">
+            <svg class="nav-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            <span class="nav-label">{{ t('nav.finance') }}</span>
           </router-link>
-          <router-link to="/reports" :class="{ active: $route.path === '/reports' }">
-            Reports
+          <router-link to="/reports" class="nav-link" :title="collapsed ? t('nav.reports') : null" :aria-label="t('nav.reports')">
+            <svg class="nav-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>
+            <span class="nav-label">{{ t('nav.reports') }}</span>
           </router-link>
-        </nav>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <button
+          class="collapse-toggle"
+          type="button"
+          :aria-label="collapsed ? t('nav.expand') : t('nav.collapse')"
+          :title="collapsed ? t('nav.expand') : t('nav.collapse')"
+          :aria-expanded="String(!collapsed)"
+          @click="toggleCollapsed"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/>
+          </svg>
+          <span class="nav-label">{{ collapsed ? t('nav.expand') : t('nav.collapse') }}</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <FilterBar />
         <LanguageSwitcher />
         <ProfileMenu
           @show-profile-details="showProfileDetails = true"
           @show-tasks="showTasks = true"
         />
-      </div>
-    </header>
-    <FilterBar />
-    <main class="main-content">
-      <router-view />
-    </main>
+      </header>
+      <main class="content">
+        <router-view />
+      </main>
+    </div>
 
     <ProfileDetailsModal
       :is-open="showProfileDetails"
@@ -82,6 +119,13 @@ export default {
     const { t } = useI18n()
     const showProfileDetails = ref(false)
     const showTasks = ref(false)
+    let saved = false
+    try { saved = localStorage.getItem('sidebar-collapsed') === '1' } catch (e) { /* storage unavailable */ }
+    const collapsed = ref(saved)
+    const toggleCollapsed = () => {
+      collapsed.value = !collapsed.value
+      try { localStorage.setItem('sidebar-collapsed', collapsed.value ? '1' : '0') } catch (e) { /* ignore */ }
+    }
     const apiTasks = ref([])
 
     // Merge mock tasks from currentUser with API tasks
@@ -155,6 +199,8 @@ export default {
       t,
       showProfileDetails,
       showTasks,
+      collapsed,
+      toggleCollapsed,
       tasks,
       addTask,
       deleteTask,
@@ -163,327 +209,87 @@ export default {
   }
 }
 </script>
-
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+.app { display: grid; grid-template-columns: var(--sidebar-width) 1fr; min-height: 100vh; transition: grid-template-columns .15s ease; }
+.app.collapsed { --sidebar-width: 56px; }
+
+.sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; overflow-x: hidden;
+  display: flex; flex-direction: column; background: var(--sidebar); border-right: 1px solid var(--border); }
+.brand { display: flex; align-items: center; gap: var(--space-3); height: 56px; min-height: 56px; padding: 0 var(--space-3);
+  border-bottom: 1px solid var(--border); }
+.brand-mark { flex: none; width: 32px; height: 32px; border-radius: var(--radius); background: var(--primary);
+  color: var(--primary-foreground); display: grid; place-items: center; font-size: var(--text-xs); font-weight: 600; }
+.brand-text { min-width: 0; }
+.brand-name { font-size: var(--text-sm); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brand-sub { font-size: var(--text-xs); color: var(--muted-foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.nav { flex: 1; padding: var(--space-3) var(--space-2); display: flex; flex-direction: column; gap: var(--space-4); }
+.nav-group { display: flex; flex-direction: column; gap: 2px; }
+.nav-group-label { padding: 0 var(--space-2) var(--space-1); font-size: var(--text-xs); font-weight: 500; color: var(--muted-foreground); white-space: nowrap; }
+.nav-link, .collapse-toggle { display: flex; align-items: center; gap: var(--space-2); height: 32px; padding: 0 var(--space-2);
+  border-radius: var(--radius); color: var(--muted-foreground); text-decoration: none; font: 400 var(--text-sm)/1 var(--font-sans);
+  white-space: nowrap; background: transparent; border: 0; cursor: pointer; width: 100%; text-align: left; }
+.nav-link:hover, .collapse-toggle:hover { background: var(--sidebar-accent); color: var(--foreground); }
+.nav-link.router-link-exact-active { background: var(--sidebar-accent); color: var(--foreground); font-weight: 500; }
+.nav-link:focus-visible, .collapse-toggle:focus-visible { outline-offset: -2px; }
+.nav-icon { flex: none; }
+.sidebar-footer { padding: var(--space-2); border-top: 1px solid var(--border); }
+
+.app.collapsed .brand { justify-content: center; padding: 0; }
+.app.collapsed .brand-text,
+.app.collapsed .nav-label { display: none; }
+.app.collapsed .nav { gap: var(--space-2); }
+.app.collapsed .nav-group + .nav-group { border-top: 1px solid var(--border); padding-top: var(--space-2); }
+.app.collapsed .nav-group-label { display: none; }
+.app.collapsed .nav-link, .app.collapsed .collapse-toggle { justify-content: center; padding: 0; }
+
+.main { min-width: 0; display: flex; flex-direction: column; }
+.topbar { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: var(--space-3);
+  min-height: 56px; flex-wrap: wrap; padding: var(--space-2) var(--space-6); background: var(--background); border-bottom: 1px solid var(--border); }
+.topbar > :first-child { flex: 1 1 320px; }
+.content { padding: var(--space-6); max-width: 1440px; width: 100%; }
+
+@media (max-width: 768px) {
+  .app { --sidebar-width: 56px; }
+  .app .brand { justify-content: center; padding: 0; }
+  .app .brand-text, .app .nav-label { display: none; }
+  .app .nav-group-label { display: none; }
+  .app .nav-link, .app .collapse-toggle { justify-content: center; padding: 0; }
+  .topbar { position: static; padding: var(--space-2) var(--space-3); }
+  .content { padding: var(--space-4) var(--space-3); }
+  .card { overflow-x: auto; max-width: 100%; }
+  .card .card-header { flex-wrap: wrap; gap: var(--space-2); }
+  .content :where(input, select) { max-width: 100%; min-width: 0; }
+  .content :where(div, section) { min-width: 0; }
 }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: #f8fafc;
-  color: #1e293b;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.top-nav {
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.nav-container {
-  max-width: 1600px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  padding: 0 2rem;
-  height: 70px;
-}
-
-.nav-container > .nav-tabs {
-  margin-left: auto;
-  margin-right: 1rem;
-}
-
-.nav-container > .language-switcher {
-  margin-right: 1rem;
-}
-
-.logo {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-}
-
-.logo h1 {
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.025em;
-}
-
-.subtitle {
-  font-size: 0.813rem;
-  color: #64748b;
-  font-weight: 400;
-  padding-left: 0.75rem;
-  border-left: 1px solid #e2e8f0;
-}
-
-.nav-tabs {
-  display: flex;
-  gap: 0.25rem;
-}
-
-.nav-tabs a {
-  padding: 0.625rem 1.25rem;
-  color: #64748b;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.938rem;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  position: relative;
-}
-
-.nav-tabs a:hover {
-  color: #0f172a;
-  background: #f1f5f9;
-}
-
-.nav-tabs a.active {
-  color: #2563eb;
-  background: #eff6ff;
-}
-
-.nav-tabs a.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #2563eb;
-}
-
-.main-content {
-  flex: 1;
-  max-width: 1600px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 1.5rem 2rem;
-}
-
-.page-header {
-  margin-bottom: 1.5rem;
-}
-
-.page-header h2 {
-  font-size: 1.875rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 0.375rem;
-  letter-spacing: -0.025em;
-}
-
-.page-header p {
-  color: #64748b;
-  font-size: 0.938rem;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
-}
-
-.stat-card {
-  background: white;
-  padding: 1.25rem;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  transition: all 0.2s ease;
-}
-
-.stat-card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
-.stat-label {
-  color: #64748b;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.625rem;
-}
-
-.stat-value {
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.025em;
-}
-
-.stat-card.warning .stat-value {
-  color: #ea580c;
-}
-
-.stat-card.success .stat-value {
-  color: #059669;
-}
-
-.stat-card.danger .stat-value {
-  color: #dc2626;
-}
-
-.stat-card.info .stat-value {
-  color: #2563eb;
-}
-
-.card {
-  background: white;
-  border-radius: 10px;
-  padding: 1.25rem;
-  border: 1px solid #e2e8f0;
-  margin-bottom: 1.25rem;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 0.875rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.card-title {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.025em;
-}
-
-.table-container {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-thead {
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-th {
-  text-align: left;
-  padding: 0.5rem 0.75rem;
-  font-weight: 600;
-  color: #475569;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-td {
-  padding: 0.5rem 0.75rem;
-  border-top: 1px solid #f1f5f9;
-  color: #334155;
-  font-size: 0.875rem;
-}
-
-tbody tr {
-  transition: background-color 0.15s ease;
-}
-
-tbody tr:hover {
-  background: #f8fafc;
-}
-
-.badge {
-  display: inline-block;
-  padding: 0.313rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
-}
-
-.badge.success {
-  background: #d1fae5;
-  color: #065f46;
-}
-
-.badge.warning {
-  background: #fed7aa;
-  color: #92400e;
-}
-
-.badge.danger {
-  background: #fecaca;
-  color: #991b1b;
-}
-
-.badge.info {
-  background: #dbeafe;
-  color: #1e40af;
-}
-
-.badge.increasing {
-  background: #d1fae5;
-  color: #065f46;
-}
-
-.badge.decreasing {
-  background: #fecaca;
-  color: #991b1b;
-}
-
-.badge.stable {
-  background: #e0e7ff;
-  color: #3730a3;
-}
-
-.badge.high {
-  background: #fecaca;
-  color: #991b1b;
-}
-
-.badge.medium {
-  background: #fed7aa;
-  color: #92400e;
-}
-
-.badge.low {
-  background: #dbeafe;
-  color: #1e40af;
-}
-
-.loading {
-  text-align: center;
-  padding: 3rem;
-  color: #64748b;
-  font-size: 0.938rem;
-}
-
-.error {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #991b1b;
-  padding: 1rem;
-  border-radius: 8px;
-  margin: 1rem 0;
-  font-size: 0.938rem;
-}
+/* Legacy shared classes used by views, now on tokens */
+.page-header { display: block; margin-bottom: var(--space-6); }
+.page-header h2 { font-size: var(--text-2xl); font-weight: 600; letter-spacing: -0.02em; margin-bottom: var(--space-1); }
+.page-header p { color: var(--muted-foreground); font-size: var(--text-sm); }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
+.stat-card { background: var(--card); padding: var(--space-5); border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.stat-label { margin-bottom: var(--space-2); }
+.stat-value { font-size: var(--text-2xl); }
+.card { padding: var(--space-6); margin-bottom: var(--space-5); }
+.card .card-header { padding: 0 0 var(--space-4); margin-bottom: var(--space-4); border-bottom: 1px solid var(--border); }
+.card-title { font-size: var(--text-base); }
+.table-container { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+thead { background: transparent; }
+th { text-align: left; padding: 0 var(--space-3); height: 40px; font-weight: 500; color: var(--muted-foreground); font-size: var(--text-sm); white-space: nowrap; border-bottom: 1px solid var(--border); }
+td { white-space: nowrap; padding: var(--space-3); border-top: 1px solid var(--border); color: var(--foreground); font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+tbody tr:hover { background: var(--muted); }
+.badge.success { background: var(--success-soft); color: var(--success); border-color: transparent; }
+.badge.warning { background: var(--warning-soft); color: var(--warning); border-color: transparent; }
+.badge.danger, .badge.high { background: var(--danger-soft); color: var(--danger); border-color: transparent; }
+.badge.info, .badge.low { background: var(--info-soft); color: var(--info); border-color: transparent; }
+.badge.increasing { background: var(--success-soft); color: var(--success); border-color: transparent; }
+.badge.decreasing { background: var(--danger-soft); color: var(--danger); border-color: transparent; }
+.badge.stable { background: var(--muted); color: var(--muted-foreground); }
+.badge.medium { background: var(--warning-soft); color: var(--warning); border-color: transparent; }
+.loading { text-align: center; padding: var(--space-10); color: var(--muted-foreground); }
+.error { background: var(--danger-soft); border: 1px solid var(--danger); color: var(--danger); padding: var(--space-4); border-radius: var(--radius); margin: var(--space-4) 0; }
 </style>
