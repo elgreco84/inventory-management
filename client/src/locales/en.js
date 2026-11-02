@@ -6,6 +6,14 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    groupOverview: 'Overview',
+    groupOperations: 'Operations',
+    groupFinance: 'Finance',
+    collapse: 'Collapse sidebar',
+    expand: 'Expand sidebar',
+    mainNav: 'Main navigation',
+    reports: 'Reports',
+    restocking: 'Restocking',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -102,7 +110,43 @@ export default {
   },
 
   // Orders
+  restocking: {
+    title: 'Restocking',
+    description: 'Recommended restock orders ranked by demand gap, within your budget',
+    budget: 'Budget',
+    recommendedTotal: 'Recommended Total',
+    remaining: 'Remaining',
+    recommendedItems: 'Recommended Items',
+    empty: 'No items fit within this budget',
+    placeOrder: 'Place Order',
+    submitting: 'Submitting...',
+    confirmed: 'Order {id} submitted. Total {total}, expected delivery {date}.',
+    failed: 'Failed to place order',
+    loadFailed: 'Failed to load recommendations',
+    table: {
+      sku: 'SKU',
+      name: 'Name',
+      trend: 'Trend',
+      quantity: 'Quantity',
+      unitCost: 'Unit Cost',
+      lineTotal: 'Line Total',
+      leadTime: 'Lead Time (days)'
+    }
+  },
+
   orders: {
+    submitted: {
+      title: 'Submitted Orders',
+      empty: 'No submitted restock orders',
+      loadFailed: 'Failed to load submitted orders',
+      orderId: 'Order ID',
+      submittedDate: 'Submitted',
+      items: 'Items',
+      total: 'Total',
+      leadTime: 'Lead Time',
+      days: '{count} days',
+      expectedDelivery: 'Expected Delivery'
+    },
     title: 'Orders',
     description: 'View and manage customer orders',
     allOrders: 'All Orders',

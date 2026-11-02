@@ -1,7 +1,8 @@
-from fastapi import FastAPI, HTTPException
+from datetime import datetime, timedelta
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from mock_data import inventory_items, orders, demand_forecasts, backlog_items, spending_summary, monthly_spending, category_spending, recent_transactions, purchase_orders
 
 app = FastAPI(title="Factory Inventory Management System")
@@ -89,6 +90,8 @@ class DemandForecast(BaseModel):
     forecasted_demand: int
     trend: str
     period: str
+    unit_cost: float
+    lead_time_days: int
 
 class BacklogItem(BaseModel):
     id: str
@@ -119,6 +122,51 @@ class CreatePurchaseOrderRequest(BaseModel):
     unit_cost: float
     expected_delivery_date: str
     notes: Optional[str] = None
+
+class RestockLine(BaseModel):
+    item_sku: str
+    item_name: str
+    trend: str
+    quantity: int
+    unit_cost: float
+    line_total: float
+    lead_time_days: int
+
+class RestockRecommendation(BaseModel):
+    budget: Optional[float]
+    total_cost: float
+    max_cost: float
+    items: List[RestockLine]
+
+class RestockOrderLineRequest(BaseModel):
+    item_sku: str
+    quantity: int = Field(gt=0)
+
+class CreateRestockOrderRequest(BaseModel):
+    items: List[RestockOrderLineRequest] = Field(min_length=1)
+
+class RestockOrder(BaseModel):
+    id: str
+    status: str
+    submitted_date: str
+    expected_delivery: str
+    lead_time_days: int
+    total_cost: float
+    items: List[RestockLine]
+
+# ponytail: in-memory like all other data; lost on restart
+restock_orders: List[dict] = []
+
+def restock_line(forecast: dict, quantity: int) -> dict:
+    return {
+        "item_sku": forecast["item_sku"],
+        "item_name": forecast["item_name"],
+        "trend": forecast["trend"],
+        "quantity": quantity,
+        "unit_cost": forecast["unit_cost"],
+        "line_total": round(quantity * forecast["unit_cost"], 2),
+        "lead_time_days": forecast["lead_time_days"],
+    }
 
 # API endpoints
 @app.get("/")
@@ -303,6 +351,63 @@ def get_monthly_trends():
     result = list(months.values())
     result.sort(key=lambda x: x['month'])
     return result
+
+@app.get("/api/restock/recommendations", response_model=RestockRecommendation)
+def get_restock_recommendations(budget: Optional[float] = Query(None, ge=0)):
+    """Recommend restock quantities (forecast minus current demand), largest gap first, within budget."""
+    candidates = sorted(
+        (f for f in demand_forecasts if f["forecasted_demand"] > f["current_demand"]),
+        key=lambda f: f["forecasted_demand"] - f["current_demand"],
+        reverse=True,
+    )
+    full = [restock_line(f, f["forecasted_demand"] - f["current_demand"]) for f in candidates]
+    max_cost = round(sum(line["line_total"] for line in full), 2)
+
+    items, remaining = [], budget if budget is not None else max_cost
+    for f, line in zip(candidates, full):
+        if line["line_total"] <= remaining:
+            items.append(line)
+            remaining -= line["line_total"]
+            continue
+        partial = int(remaining // f["unit_cost"])
+        if partial > 0:
+            items.append(restock_line(f, partial))
+        break
+
+    return {
+        "budget": budget,
+        "total_cost": round(sum(line["line_total"] for line in items), 2),
+        "max_cost": max_cost,
+        "items": items,
+    }
+
+@app.get("/api/restock-orders", response_model=List[RestockOrder])
+def get_restock_orders():
+    """Get submitted restock orders, newest first."""
+    return list(reversed(restock_orders))
+
+@app.post("/api/restock-orders", response_model=RestockOrder, status_code=201)
+def create_restock_order(request: CreateRestockOrderRequest):
+    """Submit a restock order. Prices and lead times come from forecast data, not the client."""
+    forecasts = {f["item_sku"]: f for f in demand_forecasts}
+    unknown = [line.item_sku for line in request.items if line.item_sku not in forecasts]
+    if unknown:
+        raise HTTPException(status_code=400, detail=f"Unknown SKU(s): {', '.join(unknown)}")
+
+    items = [restock_line(forecasts[line.item_sku], line.quantity) for line in request.items]
+    lead_time = max(line["lead_time_days"] for line in items)
+    now = datetime.now().replace(microsecond=0)
+    order = {
+        "id": f"RST-{len(restock_orders) + 1:04d}",
+        "status": "Submitted",
+        "submitted_date": now.isoformat(),
+        "expected_delivery": (now + timedelta(days=lead_time)).isoformat(),
+        "lead_time_days": lead_time,
+        "total_cost": round(sum(line["line_total"] for line in items), 2),
+        "items": items,
+    }
+    restock_orders.append(order)
+    return order
 
 if __name__ == "__main__":
     import uvicorn

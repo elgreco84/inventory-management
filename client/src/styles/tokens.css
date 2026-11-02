@@ -1,0 +1,64 @@
+/* Palette mapped to the project's documented slate palette (#0f172a, #64748b, #e2e8f0). */
+/* shadcn-style design tokens (zinc). The only file allowed to contain raw colors. */
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --border: #e2e8f0;
+  --input: #cbd5e1;
+  --ring: #94a3b8;
+
+  --primary: #0f172a;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+
+  /* Status: badges, deltas, alerts only */
+  --success: #16a34a;   --success-soft: #f0fdf4;
+  --warning: #d97706;   --warning-soft: #fffbeb;
+  --danger: #dc2626;    --danger-soft: #fef2f2;
+  --info: #2563eb;      --info-soft: #eff6ff;
+
+  /* Charts */
+  --chart-1: #0f172a;
+  --chart-2: #2a9d90;
+  --chart-3: #e76e50;
+  --chart-4: #e8c468;
+  --chart-5: #64748b;
+
+  --sidebar: #f8fafc;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-width: 240px;
+
+  --overlay: rgb(0 0 0 / 0.5);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-lg: 12px;
+
+  /* 4px spacing scale */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --text-xs: 12px; --text-sm: 14px; --text-base: 16px; --text-lg: 18px; --text-2xl: 24px; --text-3xl: 30px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--foreground);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+}

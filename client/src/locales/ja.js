@@ -6,6 +6,14 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    groupOverview: '概要',
+    groupOperations: 'オペレーション',
+    groupFinance: '財務',
+    collapse: 'サイドバーを折りたたむ',
+    expand: 'サイドバーを展開',
+    mainNav: 'メインナビゲーション',
+    reports: 'レポート',
+    restocking: '補充発注',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },
@@ -102,7 +110,43 @@ export default {
   },
 
   // Orders
+  restocking: {
+    title: '補充発注',
+    description: '需要ギャップの大きい順に、予算内で推奨される補充発注',
+    budget: '予算',
+    recommendedTotal: '推奨合計',
+    remaining: '残額',
+    recommendedItems: '推奨アイテム',
+    empty: 'この予算に収まるアイテムはありません',
+    placeOrder: '発注する',
+    submitting: '送信中...',
+    confirmed: '注文 {id} を送信しました。合計 {total}、納品予定日 {date}。',
+    failed: '発注に失敗しました',
+    loadFailed: '推奨データの読み込みに失敗しました',
+    table: {
+      sku: 'SKU',
+      name: '名称',
+      trend: 'トレンド',
+      quantity: '数量',
+      unitCost: '単価',
+      lineTotal: '小計',
+      leadTime: 'リードタイム（日）'
+    }
+  },
+
   orders: {
+    submitted: {
+      title: '送信済み注文',
+      empty: '送信済みの補充注文はありません',
+      loadFailed: '送信済み注文の読み込みに失敗しました',
+      orderId: '注文ID',
+      submittedDate: '送信日',
+      items: 'アイテム数',
+      total: '合計',
+      leadTime: 'リードタイム',
+      days: '{count}日',
+      expectedDelivery: '納品予定日'
+    },
     title: '注文',
     description: '顧客注文の表示と管理',
     allOrders: 'すべての注文',
